@@ -4,26 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
  
+ <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="500dp" >
     
  <ImageView android:id="@+id/myimage" 
-   android:layout_width="match_parent" 
-   android:layout_margin="0dp" 
-   android:scaleType="fitXY"
-   android:layout_height="270dp" 
-   android:layout_weight="2" /> 
+   		android:layout_width="fill_parent"
+        android:layout_height="500dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitXY" /> 
    
  <TextView
         android:id="@+id/myImageViewText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/myimage"
-        android:layout_alignTop="@+id/myimage"
-        android:layout_alignRight="@+id/myimage"
-        android:layout_alignBottom="@+id/myimage"
-        android:layout_margin="1dp"
-        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
         android:text="Hello"
-        android:textColor="#000000" />
+        android:textColor="#ffffff" />
+ </RelativeLayout>
 
  <TextView android:id="@+id/image_text" 
     android:layout_width="fill_parent" 
