@@ -41,7 +41,7 @@ ImageView im=(ImageView) layout.findViewById(R.id.myimage);
 im.setImageResource(CriteriaImages[position]);
 
 TextView txt=(TextView) layout.findViewById(R.id.image_text);
-((ViewPager) container).addView(layout, 0);
+((ViewPager) container).addView(layout);
  return layout; 
 /*
 ImageView imageView = new ImageView(context.getActivity());
