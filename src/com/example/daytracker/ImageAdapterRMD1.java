@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,7 +41,7 @@ View layout = inflater.inflate(R.layout.rmd1_custom_imageslider_layout, null);
 ImageView im=(ImageView) layout.findViewById(R.id.myimage);             
 im.setImageResource(CriteriaImages[position]);
 
-TextView txt=(TextView) layout.findViewById(R.id.image_text);
+Button btn=(Button) layout.findViewById(R.id.done_button);
 ((ViewPager) container).addView(layout);
  return layout; 
 /*

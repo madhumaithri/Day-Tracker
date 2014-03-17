@@ -31,7 +31,7 @@
         android:id="@+id/ratingCategory"
         android:layout_centerHorizontal="true"
         android:layout_height="50dp"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="440dp"
         style="?android:attr/ratingBarStyle"
         android:numStars="5"
         android:stepSize="1.0" 
@@ -40,11 +40,14 @@
 
  </RelativeLayout>
 
- <TextView android:id="@+id/image_text" 
+ <Button android:id="@+id/done_button" 
     android:layout_width="fill_parent" 
-    android:layout_height="40dp" 
-    android:textColor="#B22222" 
-    android:layout_weight="1" 
-    android:text="text to image" />
+    android:layout_height="70dp" 
+    android:textColor="#ffffff" 
+    android:background="@layout/blue_button_background"
+    android:textStyle="bold"
+    android:textSize="25dp"
+    android:clickable="false"
+    android:text="Done" />
 
 </LinearLayout>

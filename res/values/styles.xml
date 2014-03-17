@@ -16,5 +16,17 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <style name="TextColorRed">
+              <item name="android:textColor">#E44424</item>
+     </style>  
+     
+     <style name="TextColorBlue">
+              <item name="android:textColor">#67BCDB</item>
+     </style>  
+     
+     <style name="TextColorGreen">
+              <item name="android:textColor">#A2AB58</item>
+     </style>  
 
 </resources>
