@@ -1,5 +1,6 @@
 package com.example.daytracker;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +20,20 @@ public class RateMyDay1Fragment extends Fragment {
 	
 	private String mydayCategoriesString;
 	private List<String> mydayCategoriesList;
+	private List<String> imageNamesList;
+	Class resources = R.drawable.class;
+	Field[] fields  = resources.getFields();
+	String imageName = "";
+
+	public String getImageNamesList(Field[] fields)
+	{	
+		imageName ="";
+		for( Field field : fields )
+		{
+		    imageName += field.getName()+",";
+		}
+		return imageName;
+	}
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,16 +52,29 @@ public class RateMyDay1Fragment extends Fragment {
 	
 	private void loadSavedPreferences()
 	{
+		//contains names of all images in drawable separated by commas
+		imageName = getImageNamesList(fields);
+		imageNamesList = Arrays.asList(imageName.split(","));
+
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		mydayCategoriesString = sharedPreferences.getString("mydayCategories","hardwork,socializing,sleep,sports,hobbies");
 		mydayCategoriesList = Arrays.asList(mydayCategoriesString.split(","));
+		
+		for( int i=0 ; i<mydayCategoriesList.size() ; i++)
+		{
+			boolean categoryPreference = sharedPreferences.getBoolean(mydayCategoriesList.get(i), true);
+			if(categoryPreference)
+			{
+				
+			}
+		}
 		
 	    ViewPager viewPager = (ViewPager) getView().findViewById(R.id.view_pager);
 		ImageAdapterRMD1 adapter = new ImageAdapterRMD1(this);
 		viewPager.setAdapter(adapter);
 
 		
-	 	}
+	 }
 
 }
 
