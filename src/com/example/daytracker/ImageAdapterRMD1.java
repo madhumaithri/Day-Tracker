@@ -2,8 +2,11 @@ package com.example.daytracker;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -18,22 +21,27 @@ import android.widget.TextView;
 public class ImageAdapterRMD1 extends PagerAdapter
 {
 RateMyDay1Fragment context;
-int index = 0;
+int index = 0,i=0;
 
-int[] CriteriaImages = new int[]
-{
-	R.drawable.two,
-	R.drawable.two,
-};
+List<Integer> CriteriaImages = new ArrayList<Integer>();
+List<String> CriteriaNames = new ArrayList<String>();
 
-ImageAdapterRMD1(RateMyDay1Fragment rateMyDay1Fragment)
+ImageAdapterRMD1(RateMyDay1Fragment rateMyDay1Fragment, List<String> imageNames)
 {
 	this.context=rateMyDay1Fragment;
+	for(String imageName : imageNames)
+	{
+	int identifier = context.getResources().getIdentifier(imageNames.get(i), "drawable",context.getActivity().getPackageName());
+	CriteriaNames.add(imageNames.get(i));
+	CriteriaImages.add(identifier);
+	i++;
+	}
+
 }
 
 @Override
 public int getCount() {
-return CriteriaImages.length;
+return CriteriaImages.size();
 }
  
 @Override
@@ -48,24 +56,16 @@ LayoutInflater inflater = (LayoutInflater)container.getContext().getSystemServic
 View layout = inflater.inflate(R.layout.rmd1_custom_imageslider_layout, null);   
 
 ImageView image=(ImageView) layout.findViewById(R.id.myimage);             
-image.setImageResource(CriteriaImages[position]);
+image.setImageResource(CriteriaImages.get(position));
 
 TextView text=(TextView) layout.findViewById(R.id.myImageViewText);             
+text.setText("Rate my "+CriteriaNames.get(position)+" today");
 
 RatingBar rating = (RatingBar) layout.findViewById(R.id.ratingCategory);
 
 Button btn=(Button) layout.findViewById(R.id.done_button);
 ((ViewPager) container).addView(layout);
  return layout; 
-/*
-ImageView imageView = new ImageView(context.getActivity());
-int padding = context.getResources().getDimensionPixelSize(R.dimen.padding_medium);
-imageView.setPadding(padding, padding, padding, padding);
-imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-imageView.setImageResource(CriteriaImages[position]);
-((ViewPager) container).addView(imageView, 0);
-return imageView;
-*/
 }
  
 @Override
