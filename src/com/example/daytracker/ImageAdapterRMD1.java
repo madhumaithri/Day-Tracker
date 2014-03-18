@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -25,13 +26,15 @@ int index = 0,i=0;
 
 List<Integer> CriteriaImages = new ArrayList<Integer>();
 List<String> CriteriaNames = new ArrayList<String>();
+Random rand = new Random();
+int random = rand.nextInt(2)+1;
 
 ImageAdapterRMD1(RateMyDay1Fragment rateMyDay1Fragment, List<String> imageNames)
 {
 	this.context=rateMyDay1Fragment;
 	for(String imageName : imageNames)
 	{
-	int identifier = context.getResources().getIdentifier(imageNames.get(i), "drawable",context.getActivity().getPackageName());
+	int identifier = context.getResources().getIdentifier(imageNames.get(i)+(random), "drawable",context.getActivity().getPackageName());
 	CriteriaNames.add(imageNames.get(i));
 	CriteriaImages.add(identifier);
 	i++;
