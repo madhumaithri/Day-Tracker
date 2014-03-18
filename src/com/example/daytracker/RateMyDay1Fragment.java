@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -43,13 +44,12 @@ public class RateMyDay1Fragment extends Fragment {
 	{
 		super.onCreate(savedInstanceState);
 		return inflater.inflate(R.layout.rmd1_layout, container, false);
-		
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-		loadSavedPreferences();
+	    loadSavedPreferences();
 	}
 	
 	private void loadSavedPreferences()
@@ -59,7 +59,7 @@ public class RateMyDay1Fragment extends Fragment {
 		imageNamesList = Arrays.asList(imageName.split(","));
 
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		mydayCategoriesString = sharedPreferences.getString("mydayCategories","sports,hobbies");
+		mydayCategoriesString = sharedPreferences.getString("mydayCategories","hardwork,socializing,sleep,sports,hobbies");
 		mydayCategoriesList = Arrays.asList(mydayCategoriesString.split(","));
 		
 		ViewPager viewPager = (ViewPager) getView().findViewById(R.id.view_pager);
@@ -77,6 +77,13 @@ public class RateMyDay1Fragment extends Fragment {
 		viewPager.setAdapter(adapter);
 				
 	 }
+	
+	public boolean onCreateOptionsMenu() {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getActivity().getMenuInflater().inflate(R.menu.rmd1_actionbar, null);
+		return true;
+	}
+	
 
 }
 

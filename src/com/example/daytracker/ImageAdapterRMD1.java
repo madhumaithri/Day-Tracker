@@ -62,6 +62,7 @@ TextView text=(TextView) layout.findViewById(R.id.myImageViewText);
 text.setText("Rate my "+CriteriaNames.get(position)+" today");
 
 RatingBar rating = (RatingBar) layout.findViewById(R.id.ratingCategory);
+rating.setId(position);
 
 Button btn=(Button) layout.findViewById(R.id.done_button);
 ((ViewPager) container).addView(layout);

@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+     <item
+        android:id="@+id/create_note"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_chat"
+        android:title="@string/create_note"/>
+ 
+      <item
+        android:id="@+id/trackmore"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_new"
+        android:title="@string/myday_trackmore"/>
+      
+        <item
+        android:id="@+id/trackless"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_remove"
+        android:title="@string/myday_trackless"/>
+      
+
+</menu>

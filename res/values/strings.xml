@@ -29,4 +29,8 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
  
+    <!-- RMD1 Actionbar -->
+    <string name="create_note">Create Note</string>
+    <string name="myday_trackmore">Track More</string>
+    <string name="myday_trackless">Track Less</string>
 </resources>
