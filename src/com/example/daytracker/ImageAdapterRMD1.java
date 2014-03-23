@@ -37,7 +37,14 @@ ImageAdapterRMD1(RateMyDay1Fragment rateMyDay1Fragment, List<String> imageNames)
 	for(String imageName : imageNames)
 	{
 	int identifier = context.getResources().getIdentifier(imageNames.get(i)+(random), "drawable",context.getActivity().getPackageName());
-	Log.d("lol", Integer.toString(identifier));
+	
+	if(identifier == 0)
+	{
+		Random randGeneral = new Random();
+		int randomGeneral = randGeneral.nextInt(8)+1;
+		identifier = context.getResources().getIdentifier("random"+(randomGeneral), "drawable",context.getActivity().getPackageName());
+	}
+	
 	CriteriaNames.add(imageNames.get(i));
 	CriteriaImages.add(identifier);
 	i++;
