@@ -18,5 +18,4 @@
         android:icon="@drawable/ic_action_remove"
         android:title="@string/myday_trackless"/>
       
-
 </menu>

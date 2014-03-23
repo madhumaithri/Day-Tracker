@@ -33,4 +33,15 @@
     <string name="create_note">Create Note</string>
     <string name="myday_trackmore">Track More</string>
     <string name="myday_trackless">Track Less</string>
+    <string name="myday_notes">Create Note</string>
+    <!-- RMD1 Write a Note -->
+    <string name="notes_title">Write A Note</string>
+    <!-- RMD1 Track More -->
+    <string name="trackmore_title">Track More Categories</string>
+    <string name="trackmore_dialog">Add new items to track. Suggestions : Studying, Eating, Cooking, Spending...</string>
+    <string name="trackmore_hint">Fill X in \'Rate my X today\'</string>
+    <!-- RMD1 Track Less -->
+    <string name="trackless_dialog">Write A Note</string>
+    
+    
 </resources>

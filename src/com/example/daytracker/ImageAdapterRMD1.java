@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 
 public class ImageAdapterRMD1 extends PagerAdapter
@@ -35,6 +37,7 @@ ImageAdapterRMD1(RateMyDay1Fragment rateMyDay1Fragment, List<String> imageNames)
 	for(String imageName : imageNames)
 	{
 	int identifier = context.getResources().getIdentifier(imageNames.get(i)+(random), "drawable",context.getActivity().getPackageName());
+	Log.d("lol", Integer.toString(identifier));
 	CriteriaNames.add(imageNames.get(i));
 	CriteriaImages.add(identifier);
 	i++;
@@ -58,14 +61,36 @@ public Object instantiateItem(ViewGroup container, int position) {
 LayoutInflater inflater = (LayoutInflater)container.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 View layout = inflater.inflate(R.layout.rmd1_custom_imageslider_layout, null);   
 
-ImageView image=(ImageView) layout.findViewById(R.id.myimage);             
+final ImageView image=(ImageView) layout.findViewById(R.id.myimage);             
 image.setImageResource(CriteriaImages.get(position));
+image.getDrawable().setAlpha(90);
 
 TextView text=(TextView) layout.findViewById(R.id.myImageViewText);             
 text.setText("Rate my "+CriteriaNames.get(position)+" today");
 
 RatingBar rating = (RatingBar) layout.findViewById(R.id.ratingCategory);
 rating.setId(position);
+rating.setOnRatingBarChangeListener(new OnRatingBarChangeListener() 
+{
+	
+	@Override
+	public void onRatingChanged(RatingBar ratingBar, float rating,
+			boolean fromUser) {
+		// TODO Auto-generated method stub
+		if(rating == 0)
+		image.getDrawable().setAlpha(90);
+		else if(rating == 1)
+		image.getDrawable().setAlpha(120);
+		else if(rating == 2)
+		image.getDrawable().setAlpha(150);
+		else if(rating == 3)
+		image.getDrawable().setAlpha(180);
+		else if(rating == 4)
+		image.getDrawable().setAlpha(180);
+		else if(rating == 5)
+		image.getDrawable().setAlpha(255);
+	}
+});
 
 Button btn=(Button) layout.findViewById(R.id.done_button);
 ((ViewPager) container).addView(layout);
