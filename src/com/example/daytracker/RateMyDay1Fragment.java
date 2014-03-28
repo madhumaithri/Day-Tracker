@@ -86,8 +86,7 @@ public class RateMyDay1Fragment extends Fragment {
 					String newTrackmoreCategory = newTrackmoreCategoryInput.getText().toString();
 					if (!newTrackmoreCategory.isEmpty()) {
 						savePreferences(newTrackmoreCategory);
-					}
-					
+					}		
 				}
 			})
 			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -104,9 +103,43 @@ public class RateMyDay1Fragment extends Fragment {
 			
 
 		case R.id.trackless:
+			LayoutInflater inflater_trackless = LayoutInflater.from(super.getActivity());
+			final View layout_trackless = inflater_trackless.inflate(R.layout.rmd1_trackless, null);
+			final LinearLayout ll = (LinearLayout) layout_trackless.findViewById(R.id.trackless_ll);
+			final ListView lv = (ListView) layout_trackless.findViewById(R.id.deleteCategories);
+			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(super.getActivity(),android.R.layout.simple_list_item_multiple_choice,mydayCategoriesList);
+			lv.setAdapter(adapter);
+			lv.setChoiceMode(lv.CHOICE_MODE_MULTIPLE);
+			lv.setItemsCanFocus(true);
 			
+			
+			dialogBuilder = new AlertDialog.Builder(super.getActivity());
+			dialogBuilder.setView(layout_trackless)
+			.setTitle(R.string.trackless_title)
+			.setCancelable(false)
+			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{			
+					for(int i = 0; i<ll.getChildCount(); i++)
+					{
+						
+					}
+				}
+			})
+			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.cancel();
+				}
+			})
+			.setIcon(R.drawable.ic_action_new);
+			AlertDialog dialog_trackless = dialogBuilder.create();
+			dialog_trackless.show();
 			return true; 
-			
+
 		case R.id.create_note:
 			LayoutInflater inflater = LayoutInflater.from(super.getActivity());
 			final View layout = inflater.inflate(R.layout.notes,null);
@@ -158,7 +191,7 @@ public class RateMyDay1Fragment extends Fragment {
 		imageNamesList = Arrays.asList(imageName.split(","));
 
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		mydayCategoriesString = sharedPreferences.getString("mydayCategories","hardwork,socializing,sleep,sports,hobbies");
+		mydayCategoriesString = sharedPreferences.getString("mydayCategories","hardwork,socializing,sleep,sports,hobbies,");
 		mydayCategoriesList = Arrays.asList(mydayCategoriesString.split(","));
 		
 		ViewPager viewPager = (ViewPager) getView().findViewById(R.id.view_pager);
@@ -181,9 +214,10 @@ public class RateMyDay1Fragment extends Fragment {
 	{
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		Editor editor = sharedPreferences.edit();
+		mydayCategoriesString = sharedPreferences.getString("mydayCategories","hardwork,socializing,sleep,sports,hobbies");
+		
 		editor.putString("mydayCategories", mydayCategoriesString+","+newCategoryToAdd);
 		editor.putBoolean(newCategoryToAdd, true);
-		Log.d("save",newCategoryToAdd);
 		loadSavedPreferences();
 		editor.commit();
 	}
