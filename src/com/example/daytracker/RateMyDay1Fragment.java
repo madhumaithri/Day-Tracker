@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log; 
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -121,11 +123,16 @@ public class RateMyDay1Fragment extends Fragment {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which)
-				{			
-					for(int i = 0; i<ll.getChildCount(); i++)
+				{	
+					SparseBooleanArray sparseBooleanArray = lv.getCheckedItemPositions();
+					for(int i = 0; i < lv.getCount(); i++)
 					{
-						
-					}
+					     if(sparseBooleanArray.get(i) == true) 
+					     {
+					         mydayCategoriesList.set(i, ""); 
+					     }
+					 }
+					mydayCategoriesList.removeAll(Arrays.asList(null,""));
 				}
 			})
 			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
