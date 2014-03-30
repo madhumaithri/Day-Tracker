@@ -31,11 +31,11 @@
         <item>5</item>
     </string-array>
 
-    <array name="rmd_numOfStars">
+    <string-array name="rmd_numOfStars">
         <item>5</item>
         <item>7</item>
         <item>9</item>
-    </array>
+    </string-array>
     	
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
