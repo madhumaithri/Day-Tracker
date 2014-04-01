@@ -55,6 +55,7 @@ public class RateMyDay1Fragment extends Fragment {
 	{
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+		 
 		return inflater.inflate(R.layout.rmd1_layout, container, false);
 	}
 
@@ -221,10 +222,16 @@ public class RateMyDay1Fragment extends Fragment {
 	{
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		Editor editor = sharedPreferences.edit();
-		mydayCategoriesString = sharedPreferences.getString("mydayCategories","hardwork,socializing,sleep,sports,hobbies");
-		
-		editor.putString("mydayCategories", mydayCategoriesString+","+newCategoryToAdd);
-		editor.putBoolean(newCategoryToAdd, true);
+		mydayCategoriesString = sharedPreferences.getString("mydayCategories","hardwork , socializing , sleep , sports , hobbies");
+		newCategoryToAdd = newCategoryToAdd.toLowerCase();
+		Log.d("mmp",newCategoryToAdd);
+		Log.d("mmp",mydayCategoriesString);
+		if(!mydayCategoriesString.contains(newCategoryToAdd))
+		{
+			editor.putString("mydayCategories", mydayCategoriesString+" , "+newCategoryToAdd);
+			editor.putBoolean(newCategoryToAdd, true);
+			Log.d("mmp",newCategoryToAdd);
+		}
 		loadSavedPreferences();
 		editor.commit();
 	}
