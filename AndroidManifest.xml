@@ -8,6 +8,17 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="18" />
+    
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    
 
     <application
         android:allowBackup="true"
@@ -24,6 +35,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <service
+            android:name="edu.nus.msf.service.MsfEventListenerService"
+            android:enabled="true"
+            android:label="Msf Event Listener Service" >
+        </service>
+        <service
+            android:name="edu.nus.msf.service.MsfBackupService"
+            android:enabled="true"
+            android:label="MsfBackupService" >
+        </service>
+        <service
+            android:name="edu.nus.msf.service.MsfUploadService"
+            android:enabled="true"
+            android:label="UploadService" >
+        </service>
+
+        <receiver android:name="edu.nus.msf.receiver.BootCompletedIntentReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="edu.nus.msf.receiver.NetworkChangeReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <receiver 
+            android:name="edu.nus.selftracker.notification.NotificationAlarm"
+            android:enabled="true"
+            android:exported="false" >"
+        </receiver>
+        
     </application>
 
 </manifest>

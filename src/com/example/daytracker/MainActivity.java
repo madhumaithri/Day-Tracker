@@ -5,6 +5,11 @@ import info.slidingmenu.model.NavDrawerItem;
 
 import java.util.ArrayList;
 
+import edu.nus.msf.activity.MsfActivity;
+import edu.nus.msf.data.MsfGamificationData;
+import edu.nus.msf.manager.MsfNetworkManager;
+import edu.nus.msf.utils.EmrNetworkHelper;
+
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,7 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 @SuppressLint("NewApi")
-public class MainActivity extends Activity {
+public class MainActivity extends MsfActivity {
 	private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -38,7 +43,7 @@ public class MainActivity extends Activity {
     
     
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
  
@@ -106,6 +111,9 @@ public class MainActivity extends Activity {
             // on first time display view for first nav item
            displayView(1);
         }
+        
+        startEventListenerService("Event listening", "Looking for events...",
+                R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_action_remove);
     }
     
    

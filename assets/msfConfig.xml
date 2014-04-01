@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<events>
+
+    <event name="StepEvent" >
+        <saveAbove value="2.0" />
+    </event>
+
+    <event name="ApplicationLogEvent" />
+
+    <event name="BrowserHistoryEvent" />
+
+    <event name="HeartRateEvent" >
+        <retrievalInterval interval="1 min" />
+    </event>
+
+    <event name="BatteryLevelChangeEvent" >
+        <changedMoreThan value="5%" />
+    </event>
+
+    <event name="CallEvents" >
+        <phoneNumber format="md5" />
+    </event>
+
+    <event name="PhotodetectorEvent" >
+        <retrievalInterval interval="1 min" />
+
+        <scale max="100" />
+
+        <batteryLessThan value="50%" >
+
+            <retrievalInterval interval="5 min" />
+        </batteryLessThan>
+
+        <batteryLessThan value="15%" >
+
+            <retrievalInterval interval="20 min" />
+        </batteryLessThan>
+    </event>
+
+    <event name="SmsEvents" >
+        <phoneNumber format="md5" />
+    </event>
+
+    <event name="SoundPressureEvent" >
+        <retrievalInterval interval="1 min" />
+
+        <batteryLessThan value="50%" >
+
+            <retrievalInterval interval="5 min" />
+        </batteryLessThan>
+
+        <batteryLessThan value="15%" >
+
+            <retrievalInterval interval="20 min" />
+        </batteryLessThan>
+    </event>
+
+    <event name="LocationEvent" >
+        <retrievalInterval interval="1 min" />
+
+        <batteryLessThan value="50%" >
+
+            <retrievalInterval interval="5 min" />
+        </batteryLessThan>
+
+        <batteryLessThan value="15%" >
+
+            <retrievalInterval interval="20 min" />
+        </batteryLessThan>
+    </event>
+
+    <event name="WirelessDeviceEvent" >
+        <retrievalInterval interval="1 min" />
+
+        <batteryLessThan value="50%" >
+
+            <retrievalInterval interval="5 min" />
+        </batteryLessThan>
+
+        <batteryLessThan value="15%" >
+
+            <retrievalInterval interval="20 min" />
+        </batteryLessThan>
+    </event>
+
+    <event name="RealLifeEvent" />
+
+</events>
+
+<!-- ERROR: App crashes when included. Report to Gabor
+<config>
+
+    <autoBackup
+        backupLogFile="true"
+        createZipFile="true"
+        enabled="true"
+        folder="msfBackup"
+        intervall="24 hours"
+        startTime="0:00" />
+
+    <autoUpload
+        enabled="true"
+        getParameters="PREFS_GET_PARAMETERS"
+        host="http://msf-i.comp.nus.edu.sg/server/uploadData.php" />
+
+    <log
+        enabled="true"
+        file="msfBackup/msf.log"
+        level="INFO" />
+
+</config> -->
