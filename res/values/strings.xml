@@ -49,8 +49,9 @@
     <string name="notes_title">Write A Note</string>
     <!-- RMD1 Track More -->
     <string name="trackmore_title">Track More Categories</string>
-    <string name="trackmore_dialog">Add new items to track. Suggestions : Studying, Eating, Cooking, Spending...</string>
+    <string name="trackmore_dialog">Add new items to track.</string>
     <string name="trackmore_hint">Fill X in \'Rate my X today\'</string>
+    <string name="trackmore_suggestions">Suggestions</string>
     <!-- RMD1 Track Less -->
     <string name="trackless_title">Select Categories to Remove</string>
     <string name="trackless_dialog">Write A Note</string>
