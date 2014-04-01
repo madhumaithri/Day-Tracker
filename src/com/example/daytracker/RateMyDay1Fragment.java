@@ -34,6 +34,7 @@ public class RateMyDay1Fragment extends Fragment {
 	private String mydayCategoriesString;
 	AlertDialog.Builder dialogBuilder;
 	private List<String> mydayCategoriesList = new ArrayList<String>();
+	private List<String> mydayCategoriesTrueList = new ArrayList<String>();
 	private List<String> imageNamesList = new ArrayList<String>();
 	Class resources = R.drawable.class;
 	Field[] fields  = resources.getFields();
@@ -56,6 +57,12 @@ public class RateMyDay1Fragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		 
+		/*
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()); // here you get your prefrences by either of two methods
+	     Editor editor = prefs.edit();
+	     editor.clear();
+	     editor.commit();
+	     */
 		return inflater.inflate(R.layout.rmd1_layout, container, false);
 	}
 
@@ -110,7 +117,12 @@ public class RateMyDay1Fragment extends Fragment {
 			final View layout_trackless = inflater_trackless.inflate(R.layout.rmd1_trackless, null);
 			final LinearLayout ll = (LinearLayout) layout_trackless.findViewById(R.id.trackless_ll);
 			final ListView lv = (ListView) layout_trackless.findViewById(R.id.deleteCategories);
-			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(super.getActivity(),android.R.layout.simple_list_item_multiple_choice,mydayCategoriesList);
+			mydayCategoriesTrueList.clear();
+			for(String s : mydayCategoriesList) 
+			{
+				if(getPreferencesBool(s)) {mydayCategoriesTrueList.add(s);}
+			}
+			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(super.getActivity(),android.R.layout.simple_list_item_multiple_choice,mydayCategoriesTrueList);
 			lv.setAdapter(adapter);
 			lv.setChoiceMode(lv.CHOICE_MODE_MULTIPLE);
 			lv.setItemsCanFocus(true);
@@ -130,10 +142,9 @@ public class RateMyDay1Fragment extends Fragment {
 					{
 					     if(sparseBooleanArray.get(i) == true) 
 					     {
-					         mydayCategoriesList.set(i, ""); 
+					    	 savePreferencesBoolReset(lv.getItemAtPosition(i).toString());
 					     }
-					 }
-					mydayCategoriesList.removeAll(Arrays.asList(null,""));
+					}
 				}
 			})
 			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -199,7 +210,7 @@ public class RateMyDay1Fragment extends Fragment {
 		imageNamesList = Arrays.asList(imageName.split(","));
 
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		mydayCategoriesString = sharedPreferences.getString("mydayCategories","hardwork,socializing,sleep,sports,hobbies,");
+		mydayCategoriesString = sharedPreferences.getString("mydayCategories"," hardwork , socializing , sleep , sports , hobbies");
 		mydayCategoriesList = Arrays.asList(mydayCategoriesString.split(","));
 		
 		ViewPager viewPager = (ViewPager) getView().findViewById(R.id.view_pager);
@@ -207,10 +218,10 @@ public class RateMyDay1Fragment extends Fragment {
 		 
 		for( int i=0 ; i<mydayCategoriesList.size() ; i++)
 		{	
-			boolean categoryPreference = sharedPreferences.getBoolean(mydayCategoriesList.get(i), true);
+			boolean categoryPreference = sharedPreferences.getBoolean(mydayCategoriesList.get(i).trim(), true);
 			if(categoryPreference)
 			{
-				enabledCategories.add(mydayCategoriesList.get(i));
+				enabledCategories.add(mydayCategoriesList.get(i).trim());
 			}		
 		}
 		ImageAdapterRMD1 adapter = new ImageAdapterRMD1(this,enabledCategories);
@@ -222,27 +233,46 @@ public class RateMyDay1Fragment extends Fragment {
 	{
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		Editor editor = sharedPreferences.edit();
-		mydayCategoriesString = sharedPreferences.getString("mydayCategories","hardwork , socializing , sleep , sports , hobbies");
+		mydayCategoriesString = sharedPreferences.getString("mydayCategories"," hardwork , socializing , sleep , sports , hobbies");
 		newCategoryToAdd = newCategoryToAdd.toLowerCase();
-		Log.d("mmp",newCategoryToAdd);
-		Log.d("mmp",mydayCategoriesString);
 		if(!mydayCategoriesString.contains(newCategoryToAdd))
 		{
 			editor.putString("mydayCategories", mydayCategoriesString+" , "+newCategoryToAdd);
 			editor.putBoolean(newCategoryToAdd, true);
-			Log.d("mmp",newCategoryToAdd);
+		}
+		else if(mydayCategoriesString.contains(newCategoryToAdd) )
+		{
+			if(!getPreferencesBool(newCategoryToAdd))
+			{savePreferencesBoolResetToTrue(newCategoryToAdd);}
 		}
 		loadSavedPreferences();
 		editor.commit();
 	}
 	
+	
 	private void savePreferencesBoolReset(String category)
+	{	
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		Editor editor = sharedPreferences.edit();
+		editor.putBoolean(category.trim(), false);
+		editor.commit();
+		loadSavedPreferences();
+	}
+	
+	private void savePreferencesBoolResetToTrue(String category)
 	{
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		Editor editor = sharedPreferences.edit();
-		editor.putBoolean(category, false);
+		editor.putBoolean(category.trim(), true);
 		editor.commit();
 		loadSavedPreferences();
+	}
+	
+	private boolean getPreferencesBool(String category)
+	{
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		boolean categoryPreference = sharedPreferences.getBoolean(category.trim(), true);
+		return categoryPreference;
 	}
 
 	
