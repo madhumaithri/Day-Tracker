@@ -100,7 +100,7 @@ rating.setOnRatingBarChangeListener(new OnRatingBarChangeListener()
 btn=(Button) layout.findViewById(R.id.done_button);
 btn.setText("Swipe To Rate Next Activity");
 btn.setEnabled(false);
-
+btn.setOnClickListener(doneButtonHandler(btn));
 ((ViewPager) container).addView(layout);
  return layout; 
 }
@@ -111,9 +111,14 @@ public static void setEnabledToTrue()
 	btn.setText("Done");
 }
  
-public void doneButtonHandler(View view) {
-	Log.d("inian", "clicked");
+View.OnClickListener doneButtonHandler(final Button button)  {
+    return new View.OnClickListener() {
+        public void onClick(View v) {
+           RateMyDay1Fragment.doneButtonHandler(null);
+        }
+    };
 }
+
 
 @Override
 public void destroyItem(ViewGroup container, int position, Object object) {

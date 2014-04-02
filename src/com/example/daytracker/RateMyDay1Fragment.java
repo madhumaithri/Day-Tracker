@@ -286,7 +286,7 @@ public class RateMyDay1Fragment extends Fragment {
 	
 	public static void doneButtonHandler(View target)
 	{
-		Log.d("inian","m");
+		Log.d("mmp","m");
 		
 	}
 	
