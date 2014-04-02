@@ -7,6 +7,7 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log; 
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -22,7 +24,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -36,6 +40,7 @@ public class RateMyDay1Fragment extends Fragment {
 	private List<String> mydayCategoriesList = new ArrayList<String>();
 	private List<String> mydayCategoriesTrueList = new ArrayList<String>();
 	private List<String> imageNamesList = new ArrayList<String>();
+	private List<String> enabledCategories = new ArrayList<String>();
 	Class resources = R.drawable.class;
 	Field[] fields  = resources.getFields();
 	String imageName = "", mydayNotes = "";
@@ -217,6 +222,8 @@ public class RateMyDay1Fragment extends Fragment {
 	    loadSavedPreferences();
 	}
 	
+	 
+	
 	private void loadSavedPreferences()
 	{
 		//contains names of all images in drawable separated by commas
@@ -228,12 +235,12 @@ public class RateMyDay1Fragment extends Fragment {
 		mydayCategoriesList = Arrays.asList(mydayCategoriesString.split(","));
 		
 		ViewPager viewPager = (ViewPager) getView().findViewById(R.id.view_pager);
-		List<String> enabledCategories = new ArrayList<String>();
 		 
 		for( int i=0 ; i<mydayCategoriesList.size() ; i++)
 		{	
 			String s = mydayCategoriesList.get(i).trim().toLowerCase();
 			boolean categoryPreference;
+			
 			if((!s.equals("reading"))&&(!s.equals("studying"))&&(!s.equals("productivity"))&&(!s.equals("eating")))
 				categoryPreference = sharedPreferences.getBoolean(mydayCategoriesList.get(i).trim(), true);
 			else
@@ -244,10 +251,44 @@ public class RateMyDay1Fragment extends Fragment {
 				enabledCategories.add(mydayCategoriesList.get(i).trim());
 			}		
 		}
+		viewPager.setOffscreenPageLimit(enabledCategories.size());
 		ImageAdapterRMD1 adapter = new ImageAdapterRMD1(this,enabledCategories);
 		viewPager.setAdapter(adapter);
+		
+
+		
+		OnPageChangeListener mPageChangeListener = new OnPageChangeListener() {
+			 @Override
+			 public void onPageScrollStateChanged(int arg0) {
+			    // TODO Auto-generated method stub
+			}
+
+			 @Override
+			 public void onPageScrolled(int arg0, float arg1, int arg2) {
+			    // TODO Auto-generated method stub
+							
+			 }
+
+			 @Override
+			 public void onPageSelected(int pos) {
+				
+				 if(pos == enabledCategories.size()-1)
+				 {
+					ImageAdapterRMD1.setEnabledToTrue();
+				 }
+				 
+			  }
+
+			};
+			viewPager.setOnPageChangeListener(mPageChangeListener);
 				
 	 }
+	
+	public static void doneButtonHandler(View target)
+	{
+		Log.d("inian","m");
+		
+	}
 	
 	private void savePreferences(String newCategoryToAdd)
 	{
