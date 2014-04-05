@@ -2,10 +2,12 @@ package com.example.daytracker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class RateMyDay2Fragment extends Fragment {
 	Button buttonHelp;
@@ -35,6 +39,8 @@ public class RateMyDay2Fragment extends Fragment {
 	List<String> mydayCategoriesList = new ArrayList<String>(); 
 	private List<String> mydayCategoriesTrueList = new ArrayList<String>();
 	private static List<String> enabledCategories = new ArrayList<String>();
+	public static HashMap<String,Integer> activityRating = new HashMap<String,Integer>();
+	static int happinessRating;
 	String mydayCategoriesString = "hardwork,socializing,sleep,sports,hobbies";
 	RatingBar hardworkInput, socializingInput, sleepInput, sportsInput, hobbiesInput;
 	Integer hardwork,socializing,sleep,sports,hobbies,i=0;
@@ -201,6 +207,7 @@ public class RateMyDay2Fragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
 	    loadSavedPreferences();
+	   
 	}
 	
 	private void loadSavedPreferences()
@@ -225,7 +232,84 @@ public class RateMyDay2Fragment extends Fragment {
 				enabledCategories.add(mydayCategoriesList.get(i).trim());
 			}		
 		}
+		
+		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    View v = inflater.inflate(R.layout.rmd2_layout, null);
+	    
+	    ll = (LinearLayout) v.findViewById(R.id.mydayCategories);
+	    params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
+		for( i=0 ; i<enabledCategories.size() ; i++)
+		{
+			boolean categoryPreference = sharedPreferences.getBoolean(enabledCategories.get(i), true);
+			if(categoryPreference)
+				displayCategory( enabledCategories.get(i), ll);
+		}
+
+	    getActivity().setContentView(v);
 	 }
+	
+	public void displayCategory(String category, LinearLayout rl)
+	{
+		RMD2DynamicView mddv = new RMD2DynamicView(getActivity());
+	    mddv.setTextContent("Rate my "+category+" today");
+	    rl.addView(mddv);
+	    
+	}
+	
+	public static View.OnClickListener doneButtonHandler(final Context context)  {
+	    return new View.OnClickListener() {
+	        public void onClick(View v) 
+	        {
+	        	AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+	        	LayoutInflater inflater = LayoutInflater.from(context);
+	 			final View layout = inflater.inflate(R.layout.happiness_rating_dialog,null);
+	 			
+				final RatingBar r = (RatingBar) layout.findViewById(R.id.ratingCategory);
+				dialog.setView(layout)
+	 			.setTitle("And Finally..")
+	 			.setCancelable(false)
+	 			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	 				@Override
+	 				public void onClick(DialogInterface dialog, int which) {
+	 					happinessRating = (int) r.getRating();
+	 					activityRating.put("HAPPINESS", happinessRating);
+	 					endOfRMD1(context);
+	 				}
+	 			});
+	 			AlertDialog d = dialog.create();
+	 			d.show();
+	        }
+	    };
+	}
+
+	public static void addRatingValue(String category,Integer rating)
+	{
+		activityRating.put(category.toLowerCase(), rating);
+	}
+	
+	public static void endOfRMD1(Context context)
+	{
+		//TODO : Remove ones not in EnabledCategories from HasMap
+		for(int i = 0; i < enabledCategories.size(); i++)
+		{
+			if(activityRating.containsKey(enabledCategories.get(i)))
+			{}
+			else
+			{activityRating.put(enabledCategories.get(i), 0);}
+		}
+				
+		//Add this to the SQL Table
+		DatabaseHandler db = new DatabaseHandler(context);
+		for (String ar: activityRating.keySet()){
+
+            String key = ar.toString();
+            String value = activityRating.get(ar).toString();  
+            ActivityData ad = new ActivityData("",key,Integer.parseInt(value),"");
+            db.addContact(ad);
+		} 
+		
+	}
 	
 
 	

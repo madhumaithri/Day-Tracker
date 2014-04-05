@@ -59,4 +59,7 @@
     <string name="notifications_number">Number of reminders per day</string>
     <string name="ratingstars_number">Number of stars for rating</string>
     
+    <!-- RMD2 -->
+    <string name="myday_title">How Was My Day?&#160;&#160;</string>
+    
 </resources>
