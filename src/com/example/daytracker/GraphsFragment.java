@@ -11,7 +11,13 @@ import android.view.WindowManager;
 
 import com.androidplot.xy.*;
 
+import java.text.DecimalFormat;
+import java.text.FieldPosition;
+import java.text.Format;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 
 public class GraphsFragment extends Fragment {
@@ -37,7 +43,20 @@ public class GraphsFragment extends Fragment {
         // Create a couple arrays of y-values to plot:
         Number[] series1Numbers = {1, 5, 1, 0, 3, 4, 2};
         Number[] series2Numbers = {4, 6, 3, 8, 2, 10};
- 
+        Number[] years = {
+                978307200,  // 2001
+                1009843200, // 2002
+                1041379200, // 2003
+                1072915200, // 2004
+                1104537600  // 2005
+        };
+        
+        
+        plot.setDomainStep(XYStepMode.SUBDIVIDE, 7);
+        
+        
+        
+        
         // Turn the above arrays into XYSeries':
         XYSeries series1 = new SimpleXYSeries(
                 Arrays.asList(series1Numbers),          // SimpleXYSeries takes a List so turn our array into a List
@@ -68,6 +87,35 @@ public class GraphsFragment extends Fragment {
         plot.setTicksPerRangeLabel(3);
         plot.getGraphWidget().setDomainLabelOrientation(-45);
 	
-
-     }
+        
+        plot.setRangeValueFormat(new DecimalFormat("0"));
+        
+        plot.setDomainValueFormat(new Format() {
+        	 
+            // create a simple date format that draws on the year portion of our timestamp.
+            // see http://download.oracle.com/javase/1.4.2/docs/api/java/text/SimpleDateFormat.html
+            // for a full description of SimpleDateFormat.
+            private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+ 
+            @Override
+            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+ 
+                // because our timestamps are in seconds and SimpleDateFormat expects milliseconds
+                // we multiply our timestamp by 1000:
+                long timestamp = ((Number) obj).longValue() * 1000;
+                Date date = new Date(timestamp);
+                return dateFormat.format(date, toAppendTo, pos);
+            }
+ 
+            @Override
+            public Object parseObject(String source, ParsePosition pos) {
+                return null;
+ 
+            }
+        
+        });
+     
+    
+    
+    }
 }
