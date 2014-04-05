@@ -32,6 +32,7 @@ List<String> CriteriaNames = new ArrayList<String>();
 Random rand = new Random();
 int random = rand.nextInt(2)+1;
 private static Button btn;
+private static RatingBar rating;
 
 ImageAdapterRMD1(RateMyDay1Fragment rateMyDay1Fragment, List<String> imageNames)
 {
@@ -66,7 +67,7 @@ return view == ((View) object);
 }
  
 @Override
-public Object instantiateItem(ViewGroup container, int position) {
+public Object instantiateItem(ViewGroup container, final int position) {
 
 LayoutInflater inflater = (LayoutInflater)container.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 View layout = inflater.inflate(R.layout.rmd1_custom_imageslider_layout, null);   
@@ -78,7 +79,7 @@ image.getDrawable().setAlpha(90);
 TextView text=(TextView) layout.findViewById(R.id.myImageViewText);             
 text.setText("Rate my "+CriteriaNames.get(position)+" today");
 
-RatingBar rating = (RatingBar) layout.findViewById(R.id.ratingCategory);
+rating = (RatingBar) layout.findViewById(R.id.ratingCategory);
 rating.setId(position);
 rating.setOnRatingBarChangeListener(new OnRatingBarChangeListener() 
 {
@@ -99,6 +100,8 @@ rating.setOnRatingBarChangeListener(new OnRatingBarChangeListener()
 		image.getDrawable().setAlpha(180);
 		else if(rating == 5)
 		image.getDrawable().setAlpha(255);
+		
+		RateMyDay1Fragment.addRatingValue(CriteriaNames.get(position),(int) rating);
 	}
 });
 btn=(Button) layout.findViewById(R.id.done_button);
@@ -113,8 +116,13 @@ btn.setOnClickListener(RateMyDay1Fragment.doneButtonHandler(c));
 public static void setEnabledToTrue()
 {
 	btn.setEnabled(true);
-	btn.setText("Done");
-	
+	btn.setText("Done");	
+}
+
+public static int getRating()
+{
+	 int r = (int) rating.getRating(); 
+	 return r;
 }
  
 @Override

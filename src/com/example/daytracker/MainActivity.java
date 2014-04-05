@@ -187,7 +187,7 @@ public class MainActivity extends Activity {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.frame_container, fragment).commit();
-
+			
 			// update selected item and title, then close the drawer
 			mDrawerList.setItemChecked(position, true);
 			mDrawerList.setSelection(position);
@@ -195,6 +195,7 @@ public class MainActivity extends Activity {
 			mDrawerLayout.closeDrawer(mDrawerList);
 		} else {
 			// error in creating fragment
+			
 			Log.e("MainActivity", "Error in creating fragment");
 		}
 	}

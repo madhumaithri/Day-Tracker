@@ -29,4 +29,14 @@
               <item name="android:textColor">#A2AB58</item>
      </style>  
 
+    <style name="sample_activity">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+ 
+    <style name="toc_button">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+ 
 </resources>

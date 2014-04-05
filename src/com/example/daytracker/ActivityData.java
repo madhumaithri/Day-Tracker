@@ -1,5 +1,8 @@
 package com.example.daytracker;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class ActivityData {
 
 	String _date;
@@ -20,7 +23,8 @@ public class ActivityData {
 	 }
 	
 	 public String getDate(){
-	     return this._date;
+		 String timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+	     return timeStamp;
 	 }
 	     
 	 // setting date
@@ -42,7 +46,7 @@ public class ActivityData {
 	 }
 	     
 	 // setting rating
-	 public void setID(int rating){
+	 public void setRating(int rating){
 	     this._rating = rating;
 	 }
 	 

@@ -3,6 +3,7 @@ package com.example.daytracker;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
@@ -33,6 +34,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout.LayoutParams;
 
 public class RateMyDay1Fragment extends Fragment {
@@ -42,9 +44,11 @@ public class RateMyDay1Fragment extends Fragment {
 	private List<String> mydayCategoriesList = new ArrayList<String>();
 	private List<String> mydayCategoriesTrueList = new ArrayList<String>();
 	private List<String> imageNamesList = new ArrayList<String>();
-	private List<String> enabledCategories = new ArrayList<String>();
+	private static List<String> enabledCategories = new ArrayList<String>();
+	public static HashMap<String,Integer> activityRating = new HashMap<String,Integer>();
 	Class resources = R.drawable.class;
 	Field[] fields  = resources.getFields();
+	static int happinessRating;
 	String imageName = "", mydayNotes = "";
 
 	public String getImageNamesList(Field[] fields)
@@ -63,13 +67,6 @@ public class RateMyDay1Fragment extends Fragment {
 	{
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		 
-		/*
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()); // here you get your prefrences by either of two methods
-	     Editor editor = prefs.edit();
-	     editor.clear();
-	     editor.commit();
-	     */
 		return inflater.inflate(R.layout.rmd1_layout, container, false);
 	}
 
@@ -276,16 +273,42 @@ public class RateMyDay1Fragment extends Fragment {
 				 if(pos == enabledCategories.size()-1)
 				 {
 					ImageAdapterRMD1.setEnabledToTrue();
-					Button btn=(Button) getActivity().findViewById(R.id.done_button);
-					
+					Button btn=(Button) getActivity().findViewById(R.id.done_button);			
 				 }
-				 
+	
 			  }
 
 			};
 			viewPager.setOnPageChangeListener(mPageChangeListener);
-				
 	 }
+	
+	public static void addRatingValue(String category,Integer rating)
+	{
+		activityRating.put(category.toLowerCase(), rating);
+	}
+	
+	public static void endOfRMD1(Context context)
+	{
+		//TODO : Remove ones not in EnabledCategories from HasMap
+		for(int i = 0; i < enabledCategories.size(); i++)
+		{
+			if(activityRating.containsKey(enabledCategories.get(i)))
+			{}
+			else
+			{activityRating.put(enabledCategories.get(i), 0);}
+		}
+				
+		//Add this to the SQL Table
+		DatabaseHandler db = new DatabaseHandler(context);
+		for (String ar: activityRating.keySet()){
+
+            String key = ar.toString();
+            String value = activityRating.get(ar).toString();  
+            ActivityData ad = new ActivityData("",key,Integer.parseInt(value),"");
+            db.addContact(ad);
+		} 
+		
+	}
 	
 	public static View.OnClickListener doneButtonHandler(final Context context)  {
 	    return new View.OnClickListener() {
@@ -294,26 +317,21 @@ public class RateMyDay1Fragment extends Fragment {
 	        	AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 	        	LayoutInflater inflater = LayoutInflater.from(context);
 	 			final View layout = inflater.inflate(R.layout.happiness_rating_dialog,null);
-	 			dialog.setView(layout)
-	 			.setTitle(R.string.notes_title)
+	 			
+				final RatingBar r = (RatingBar) layout.findViewById(R.id.ratingCategory);
+				dialog.setView(layout)
+	 			.setTitle("And Finally..")
 	 			.setCancelable(false)
 	 			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 	 				@Override
 	 				public void onClick(DialogInterface dialog, int which) {
-	 					// TODO Auto-generated method stub
-	 					//saveMyMoodNotes(layout);
-	 				}
-	 			})
-	 			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	 				@Override
-	 				public void onClick(DialogInterface dialog, int which) {
-	 					// TODO Auto-generated method stub
-	 					dialog.cancel();
+	 					happinessRating = (int) r.getRating();
+	 					activityRating.put("HAPPINESS", happinessRating);
+	 					endOfRMD1(context);
 	 				}
 	 			});
 	 			AlertDialog d = dialog.create();
 	 			d.show();
-	 			 
 	        }
 	    };
 	}
