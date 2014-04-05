@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 //import com
 
+
+import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 public class ImageAdapterRMD1 extends PagerAdapter 
 {
 RateMyDay1Fragment context;
+Context c;
 int index = 0,i=0;
 
 List<Integer> CriteriaImages = new ArrayList<Integer>();
@@ -33,6 +36,7 @@ private static Button btn;
 ImageAdapterRMD1(RateMyDay1Fragment rateMyDay1Fragment, List<String> imageNames)
 {
 	this.context=rateMyDay1Fragment;
+	c = rateMyDay1Fragment.getActivity();
 	for(String imageName : imageNames)
 	{
 	int identifier = context.getResources().getIdentifier(imageNames.get(i)+(random), "drawable",context.getActivity().getPackageName());
@@ -100,7 +104,8 @@ rating.setOnRatingBarChangeListener(new OnRatingBarChangeListener()
 btn=(Button) layout.findViewById(R.id.done_button);
 btn.setText("Swipe To Rate Next Activity");
 btn.setEnabled(false);
-btn.setOnClickListener(doneButtonHandler(btn));
+btn.setOnClickListener(RateMyDay1Fragment.doneButtonHandler(c));
+
 ((ViewPager) container).addView(layout);
  return layout; 
 }
@@ -109,17 +114,9 @@ public static void setEnabledToTrue()
 {
 	btn.setEnabled(true);
 	btn.setText("Done");
+	
 }
  
-View.OnClickListener doneButtonHandler(final Button button)  {
-    return new View.OnClickListener() {
-        public void onClick(View v) {
-           RateMyDay1Fragment.doneButtonHandler(null);
-        }
-    };
-}
-
-
 @Override
 public void destroyItem(ViewGroup container, int position, Object object) {
 ((ViewPager) container).removeView((View) object);

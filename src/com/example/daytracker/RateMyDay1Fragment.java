@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.appwidget.AppWidgetManager;
@@ -14,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log; 
@@ -222,7 +224,6 @@ public class RateMyDay1Fragment extends Fragment {
 	    loadSavedPreferences();
 	}
 	
-	 
 	
 	private void loadSavedPreferences()
 	{
@@ -275,6 +276,8 @@ public class RateMyDay1Fragment extends Fragment {
 				 if(pos == enabledCategories.size()-1)
 				 {
 					ImageAdapterRMD1.setEnabledToTrue();
+					Button btn=(Button) getActivity().findViewById(R.id.done_button);
+					
 				 }
 				 
 			  }
@@ -284,11 +287,37 @@ public class RateMyDay1Fragment extends Fragment {
 				
 	 }
 	
-	public static void doneButtonHandler(View target)
-	{
-		Log.d("mmp","m");
-		
+	public static View.OnClickListener doneButtonHandler(final Context context)  {
+	    return new View.OnClickListener() {
+	        public void onClick(View v) 
+	        {
+	        	AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+	        	LayoutInflater inflater = LayoutInflater.from(context);
+	 			final View layout = inflater.inflate(R.layout.happiness_rating_dialog,null);
+	 			dialog.setView(layout)
+	 			.setTitle(R.string.notes_title)
+	 			.setCancelable(false)
+	 			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	 				@Override
+	 				public void onClick(DialogInterface dialog, int which) {
+	 					// TODO Auto-generated method stub
+	 					//saveMyMoodNotes(layout);
+	 				}
+	 			})
+	 			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	 				@Override
+	 				public void onClick(DialogInterface dialog, int which) {
+	 					// TODO Auto-generated method stub
+	 					dialog.cancel();
+	 				}
+	 			});
+	 			AlertDialog d = dialog.create();
+	 			d.show();
+	 			 
+	        }
+	    };
 	}
+
 	
 	private void savePreferences(String newCategoryToAdd)
 	{
