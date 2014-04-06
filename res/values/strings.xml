@@ -26,11 +26,7 @@
         <item>@drawable/ic_pages</item>
     </array>
     
-    <string-array name="notifications_numbers">
-        <item>3</item>
-        <item>5</item>
-    </string-array>
-
+  
     <string-array name="rmd_numOfStars">
         <item>5</item>
         <item>7</item>
@@ -56,8 +52,8 @@
     <string name="trackless_title">Select Categories to Remove</string>
     <string name="trackless_dialog">Write A Note</string>
     <!-- Settings -->
-    <string name="notifications_number">Number of reminders per day</string>
-    <string name="ratingstars_number">Number of stars for rating</string>
+    <string name="notifications_text">Set The Time For Your Reminder</string>
+    <string name="ratingstars_number">Set The Number Of Stars For Rating</string>
     
     <!-- RMD2 -->
     <string name="myday_title">How Was My Day?&#160;&#160;</string>
