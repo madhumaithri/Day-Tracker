@@ -42,7 +42,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" />
 
- <Button android:id="@+id/done_button" 
+ <Button android:id="@+id/apply_settings_button" 
     android:layout_width="fill_parent" 
     android:layout_height="70dp" 
     android:layout_marginTop="135dp"

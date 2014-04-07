@@ -59,14 +59,16 @@ public class MainActivity extends Activity {
         // adding nav drawer items to array
         // Home
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Find People
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1), true, "1"));
-        // Photos
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1), true, "1"));
-        // Communities, Will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-        // Pages
+        // About
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        // RMD1
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));//, true, "1"));
+        // RMD2
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));//, true, "1"));
+        // Graphs
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
+        // Settings
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
          
  
         // Recycle the typed array
@@ -168,15 +170,18 @@ public class MainActivity extends Activity {
 			fragment = new HomeFragment();
 			break;
 		case 1:
-			fragment = new RateMyDay1Fragment();
+			fragment = new HomeFragment();
 			break;
 		case 2:
-			fragment = new RateMyDay2Fragment();
+			fragment = new RateMyDay1Fragment();
 			break;
 		case 3:
-			fragment = new GraphsFragment();
+			fragment = new RateMyDay2Fragment();
 			break;
 		case 4:
+			fragment = new GraphsFragment();
+			break;
+		case 5:
 			fragment = new NotificationsFragment();
 			break;
 		default:
