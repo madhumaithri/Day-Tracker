@@ -23,7 +23,7 @@ import android.widget.ListView;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity {
-	private DrawerLayout mDrawerLayout;
+	public static DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
    // nav drawer title
@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
  
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-           displayView(1);
+           displayView(0);
         }
         
     }
@@ -170,7 +170,7 @@ public class MainActivity extends Activity {
 			fragment = new HomeFragment();
 			break;
 		case 1:
-			fragment = new HomeFragment();
+			fragment = new AboutFragment();
 			break;
 		case 2:
 			fragment = new RateMyDay1Fragment();

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            style="@style/LoginFormContainer"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/TextColorRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="@string/first_welcome"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="50sp" />
+
+            <EditText
+                android:id="@+id/setup_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:ems="10"
+                android:textColor="#000000"
+                android:hint="@string/enter_name"
+                android:inputType="textCapSentences" >
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/setup_user_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:ems="10"
+                android:textColor="#000000"
+                android:hint="@string/enter_email"
+                android:inputType="textEmailAddress" />
+
+            <Button
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+            	android:textStyle="bold"
+            	android:textColor="#ffffff"
+    			android:background="@layout/blue_button_background"
+                android:text="@string/button_begin"
+                android:onClick="storeUserDetail" />
+        </LinearLayout>
+    </ScrollView>
+    
+
+</LinearLayout>

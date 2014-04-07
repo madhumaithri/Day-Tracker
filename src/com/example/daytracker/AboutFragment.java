@@ -20,9 +20,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class HomeFragment extends Fragment {
+public class AboutFragment extends Fragment {
 	
-	public HomeFragment(){}
+	public AboutFragment(){}
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

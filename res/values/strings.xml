@@ -38,6 +38,14 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
  
+    <!-- Home -->
+    <string name="first_welcome">Welcome to Day Tracker</string>
+    <string name="user_greeting">Hi Madhu, </string>
+    <string name="enter_name">Your Name   </string>
+ 	<string name="enter_email">Your Email  </string>
+ 	<string name="button_begin">Let\'s Begin!  </string>
+ 
+ 
     <!-- RMD1 Actionbar -->
     <string name="create_note">Create Note</string>
     <string name="myday_trackmore">Track More</string>
