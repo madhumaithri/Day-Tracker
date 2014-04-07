@@ -68,4 +68,29 @@
     <!-- RMD2 -->
     <string name="myday_title">How Was My Day?&#160;&#160;</string>
     
+    <!-- About -->
+    <string name="about_qn1">What does Day Tracker do?</string>
+    <string name="about_ans1">Day Tracker is an Android app that helps you keep
+         track of your daily activities. Everyday, you can rate how you felt about different
+          activities during the day on a star-based rating system and even add notes such as a description of
+           the activity, time of the event and the people you were accompanied with.
+            Finally, you can rate your overall happiness during the day. Over time,
+             Day Tracker will collect enough data to be able to find co-relations between
+              your activities and your overall happiness level.</string>
+    
+    <string name="about_qn2">What is the purpose of doing so?</string>
+    <string name="about_ans2">More happiness and mental wellness in the world! You can also see 
+        a visualization of the changes in your happiness levels on the Graphs screen.</string>
+    
+    <string name="about_qn3">Which activities can be tracked?</string>
+    <string name="about_ans3">Just about anything! Day Tracker provides you with 5 default activities : 
+        hardwork, socializing, sleep, sports and hobbies. You can use the \'Plus\' and \'Into\' icons on 
+        the Action Bar to add new or delete existing activities, respectively. Day Tracker also provides
+        you with two ways to enter your data : Rate My Day-Pics and Rate My Day-List. You can choose
+        whichever one you prefer from the menu.</string>
+    
+    <string name="about_qn4">Want more info?</string>
+    <string name="about_ans4">Watch this video.</string>
+    
+    
 </resources>

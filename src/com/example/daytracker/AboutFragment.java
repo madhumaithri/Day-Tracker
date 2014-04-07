@@ -28,7 +28,7 @@ public class AboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
-        View rootView = inflater.inflate(R.layout.home_welcome, container, false);
+        View rootView = inflater.inflate(R.layout.about_layout, container, false);
          
         return rootView;
         
@@ -37,30 +37,31 @@ public class AboutFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-	    addListenerOnButton();
-		   
-	    TextView textCategory = (TextView) getActivity().findViewById(R.id.greeting);      
-	    Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-BoldItalic.ttf");
-        textCategory.setTypeface(font);
+	    TextView textCategoryqn1 = (TextView) getActivity().findViewById(R.id.about_qn1);      
+	    Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-BoldItalic.ttf");
+        textCategoryqn1.setTypeface(fontBold);
+        TextView textCategoryqn2 = (TextView) getActivity().findViewById(R.id.about_qn2);      
+        textCategoryqn2.setTypeface(fontBold);
+        TextView textCategoryqn3 = (TextView) getActivity().findViewById(R.id.about_qn3);   
+        textCategoryqn3.setTypeface(fontBold);
+        TextView textCategoryqn4 = (TextView) getActivity().findViewById(R.id.about_qn4);   
+        textCategoryqn4.setTypeface(fontBold);
+        
+        
+        TextView textCategoryans1 = (TextView) getActivity().findViewById(R.id.about_ans1);      
+	    Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Italic.ttf");
+        textCategoryans1.setTypeface(font);
+        TextView textCategoryans2 = (TextView) getActivity().findViewById(R.id.about_ans2);      
+        textCategoryans2.setTypeface(font);
+        TextView textCategoryans3 = (TextView) getActivity().findViewById(R.id.about_ans3);   
+        textCategoryans3.setTypeface(font);
+        TextView textCategoryans4 = (TextView) getActivity().findViewById(R.id.about_ans4);   
+        textCategoryans4.setTypeface(font);
+        
+        
+	    
 
 	}
 
-	public void addListenerOnButton() {
-		 
-		Button btnAddEntry = (Button) getActivity().findViewById(R.id.add_entry_button);
- 
-		btnAddEntry.setOnClickListener(new OnClickListener() {
- 
-			@Override
-			public void onClick(View v) {
- 
-				//Intent mainIntent = new Intent(getActivity(), RateMyDay1Fragment.class);
-	            //startActivity(mainIntent);
-				MainActivity.mDrawerLayout.openDrawer(Gravity.LEFT);
-			}
- 
-		});
- 
-	}
 
 }
