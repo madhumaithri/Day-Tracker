@@ -76,6 +76,11 @@ public class HomeFragment extends Fragment {
 		    Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-BoldItalic.ttf");
 	        textCategory.setTypeface(font);
 		}
+	    else
+	    {
+	    	addListenerOnButton();
+			
+	    }
 
 	}
 
@@ -97,6 +102,21 @@ public class HomeFragment extends Fragment {
 				}
 	 
 			});
+		}
+		else
+		{
+			Button btnLetsBegin = (Button) getActivity().findViewById(R.id.begin_button);
+
+			btnLetsBegin.setOnClickListener(new OnClickListener() {
+	 
+				@Override
+				public void onClick(View v) {
+					
+				}
+	 
+			});
+	
+			
 		}
 	}
 
