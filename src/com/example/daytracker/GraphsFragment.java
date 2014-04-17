@@ -11,6 +11,7 @@ import android.view.WindowManager;
 
 import com.androidplot.xy.*;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.Format;
@@ -96,15 +97,22 @@ public class GraphsFragment extends Fragment {
             // see http://download.oracle.com/javase/1.4.2/docs/api/java/text/SimpleDateFormat.html
             // for a full description of SimpleDateFormat.
             private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+			private int num = 7;
  
             @Override
             public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
  
                 // because our timestamps are in seconds and SimpleDateFormat expects milliseconds
                 // we multiply our timestamp by 1000:
-                long timestamp = ((Number) obj).longValue() * 1000;
-                Date date = new Date(timestamp);
-                return dateFormat.format(date, toAppendTo, pos);
+                //long timestamp = (((Number) obj).longValue()) * 1000;
+                //Date date = new Date(timestamp);
+                
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                Date date = new Date();
+                //System.out.println(dateFormat.format(date));
+                
+                return dateFormat.format(new Date(date.getTime() - (--num) *24*3600*1000), toAppendTo, pos);
+                
             }
  
             @Override

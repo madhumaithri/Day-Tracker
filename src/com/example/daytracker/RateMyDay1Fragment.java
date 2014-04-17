@@ -67,12 +67,12 @@ public class RateMyDay1Fragment extends Fragment {
 	{
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		/*
+		
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		Editor editor = sharedPreferences.edit();
 		editor.clear();
 		editor.commit();
-		*/
+		
 		return inflater.inflate(R.layout.rmd1_layout, container, false);
 	}
 

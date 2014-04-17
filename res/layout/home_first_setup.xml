@@ -4,10 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ScrollView
-        android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
         <LinearLayout
             style="@style/LoginFormContainer"
@@ -62,7 +58,5 @@
                 android:text="@string/button_begin"
                 android:onClick="storeUserDetail" />
         </LinearLayout>
-    </ScrollView>
-    
 
 </LinearLayout>
