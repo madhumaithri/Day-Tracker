@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -37,6 +38,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 
 public class RateMyDay1Fragment extends Fragment {
@@ -86,6 +88,18 @@ public class RateMyDay1Fragment extends Fragment {
 	}
 	
 	@Override
+	public void onPause()
+	{
+		super.onPause();
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
@@ -122,6 +136,7 @@ public class RateMyDay1Fragment extends Fragment {
 					String newTrackmoreCategory = newTrackmoreCategoryInput.getText().toString();
 					if (!newTrackmoreCategory.isEmpty()) {
 						savePreferences(newTrackmoreCategory);
+					
 					}		
 				}
 			})
@@ -235,13 +250,13 @@ public class RateMyDay1Fragment extends Fragment {
 		//contains names of all images in drawable separated by commas
 		imageName = getImageNamesList(fields);
 		imageNamesList = Arrays.asList(imageName.split(","));
-
+		enabledCategories = new ArrayList<String>();
+		
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		mydayCategoriesString = sharedPreferences.getString("mydayCategories"," hardwork , socializing , sleep , sports , hobbies , reading , studying , productivity , eating");
 		mydayCategoriesList = Arrays.asList(mydayCategoriesString.split(","));
 		
 		ViewPager viewPager = (ViewPager) getView().findViewById(R.id.view_pager);
-		 
 		for( int i=0 ; i<mydayCategoriesList.size() ; i++)
 		{	
 			String s = mydayCategoriesList.get(i).trim().toLowerCase();
@@ -257,6 +272,7 @@ public class RateMyDay1Fragment extends Fragment {
 				enabledCategories.add(mydayCategoriesList.get(i).trim());
 			}		
 		}
+		 	
 		viewPager.setOffscreenPageLimit(enabledCategories.size());
 		ImageAdapterRMD1 adapter = new ImageAdapterRMD1(this,enabledCategories);
 		viewPager.setAdapter(adapter);
@@ -371,20 +387,30 @@ public class RateMyDay1Fragment extends Fragment {
 		Editor editor = sharedPreferences.edit();
 		mydayCategoriesString = sharedPreferences.getString("mydayCategories"," hardwork , socializing , sleep , sports , hobbies , reading , studying , productivity , eating");
 		newCategoryToAdd = newCategoryToAdd.toLowerCase();
+		final String newCat = newCategoryToAdd; 
 		if(!mydayCategoriesString.contains(newCategoryToAdd))
 		{
 			editor.putString("mydayCategories", mydayCategoriesString+" , "+newCategoryToAdd);
-			editor.putBoolean(newCategoryToAdd, true);
+			editor.putBoolean(newCategoryToAdd, true);	
+			editor.commit();			
 		}
-		else if(mydayCategoriesString.contains(newCategoryToAdd) )
+		else if(mydayCategoriesString.contains(newCategoryToAdd))
 		{
 			if(!getPreferencesBool(newCategoryToAdd.trim()))
 			{
 			savePreferencesBoolResetToTrue(newCategoryToAdd);
 			}
 		}
-		loadSavedPreferences();
+		
 		editor.commit();
+	 	Fragment fragment = new RateMyDay1Fragment();
+	 	FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.frame_container, fragment).commit(); 
+
+		Toast.makeText(getActivity(), newCat+" successfully added to the end of the list. Refreshed.", Toast.LENGTH_LONG).show();
+		//loadSavedPreferences();
+		
 	}
 	
 	
