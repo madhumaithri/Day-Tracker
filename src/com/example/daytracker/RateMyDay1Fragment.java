@@ -408,7 +408,7 @@ public class RateMyDay1Fragment extends Fragment {
 		fragmentManager.beginTransaction()
 				.replace(R.id.frame_container, fragment).commit(); 
 
-		Toast.makeText(getActivity(), newCat+" successfully added to the end of the list. Refreshed.", Toast.LENGTH_LONG).show();
+		Toast.makeText(getActivity(), newCat+" successfully added to the end of the list. List refreshed.", Toast.LENGTH_LONG).show();
 		//loadSavedPreferences();
 		
 	}
@@ -420,7 +420,14 @@ public class RateMyDay1Fragment extends Fragment {
 		Editor editor = sharedPreferences.edit();
 		editor.putBoolean(category.trim(), false);
 		editor.commit();
-		loadSavedPreferences();
+		
+	 	Fragment fragment = new RateMyDay1Fragment();
+	 	FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.frame_container, fragment).commit(); 
+
+		Toast.makeText(getActivity(), category+" successfully removed from the list. List refreshed.", Toast.LENGTH_LONG).show();
+
 	}
 	
 	private void savePreferencesBoolResetToTrue(String category)
