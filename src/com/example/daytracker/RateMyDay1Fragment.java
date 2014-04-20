@@ -3,12 +3,14 @@ package com.example.daytracker;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -50,7 +52,7 @@ public class RateMyDay1Fragment extends Fragment {
 	Field[] fields  = resources.getFields();
 	static int happinessRating;
 	String imageName = "", mydayNotes = "";
-
+	
 	public String getImageNamesList(Field[] fields)
 	{	
 		imageName ="";
@@ -67,12 +69,12 @@ public class RateMyDay1Fragment extends Fragment {
 	{
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		
+		/*
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		Editor editor = sharedPreferences.edit();
 		editor.clear();
 		editor.commit();
-		
+		*/
 		return inflater.inflate(R.layout.rmd1_layout, container, false);
 	}
 
@@ -314,6 +316,12 @@ public class RateMyDay1Fragment extends Fragment {
             db.addContact(ad);
 		} 
 		
+		Fragment fragment = new HomeFragment();
+	 	FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.frame_container, fragment).commit();
+		
+		
 	}
 	
 	public static View.OnClickListener doneButtonHandler(final Context context)  {
@@ -329,10 +337,24 @@ public class RateMyDay1Fragment extends Fragment {
 	 			.setTitle("And Finally..")
 	 			.setCancelable(false)
 	 			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-	 				@Override
+	 				@SuppressWarnings("deprecation")
+					@Override
 	 				public void onClick(DialogInterface dialog, int which) {
 	 					happinessRating = (int) r.getRating();
 	 					activityRating.put("HAPPINESS", happinessRating);
+	 					
+	 					
+	 					SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+						Editor editor = sharedPreferences .edit();
+						editor.putBoolean("ENTRYDONE", true);	
+						editor.commit();
+						editor.putBoolean("FIRSTLOGIN", false);	
+						editor.commit();
+						Date today = new Date();
+						editor.putInt("PREVIOUSENTRYDATE", today.getDate());
+						editor.commit();
+					 	
+					 	
 	 					endOfRMD1(context);
 	 				}
 	 			});

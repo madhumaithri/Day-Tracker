@@ -40,7 +40,7 @@
  
     <!-- Home -->
     <string name="first_welcome">Welcome to Day Tracker</string>
-    <string name="user_greeting">Hi Madhu, </string>
+    <string name="user_greeting">Hi </string>
     <string name="enter_name">Your Name   </string>
  	<string name="enter_email">Your Email  </string>
  	<string name="button_begin">Let\'s Begin!  </string>
