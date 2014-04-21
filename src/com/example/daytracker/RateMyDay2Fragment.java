@@ -2,11 +2,14 @@ package com.example.daytracker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -31,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 
 public class RateMyDay2Fragment extends Fragment {
@@ -46,7 +50,7 @@ public class RateMyDay2Fragment extends Fragment {
 	Integer hardwork,socializing,sleep,sports,hobbies,i=0;
 	String mydayNotes="",newTrackmoreCategory="";
 	LinearLayout ll;
-	LinearLayout.LayoutParams params;
+	android.widget.AbsListView.LayoutParams params;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +67,18 @@ public class RateMyDay2Fragment extends Fragment {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		super.getActivity().getMenuInflater().inflate(R.menu.rmd1_actionbar, menu);
 		return;
+	}
+	
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 	}
 	
 	@Override
@@ -215,7 +231,7 @@ public class RateMyDay2Fragment extends Fragment {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		mydayCategoriesString = sharedPreferences.getString("mydayCategories"," hardwork , socializing , sleep , sports , hobbies , reading , studying , productivity , eating");
 		mydayCategoriesList = Arrays.asList(mydayCategoriesString.split(","));
-		
+		enabledCategories = new ArrayList<String>();
 		 
 		for( int i=0 ; i<mydayCategoriesList.size() ; i++)
 		{	
@@ -233,6 +249,14 @@ public class RateMyDay2Fragment extends Fragment {
 			}		
 		}
 		
+		ListView yourListView = (ListView) getActivity().findViewById(R.id.mydayCategories);
+
+		// get data from the table by the ListAdapter
+		ListAdapter customAdapter = new ListAdapter(this.getActivity(), R.layout.rmd2_dynamic_view, enabledCategories);
+		
+		yourListView.setAdapter(customAdapter);
+		
+		/*
 		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    View v = inflater.inflate(R.layout.rmd2_layout, null);
 	    
@@ -243,10 +267,11 @@ public class RateMyDay2Fragment extends Fragment {
 		{
 			boolean categoryPreference = sharedPreferences.getBoolean(enabledCategories.get(i), true);
 			if(categoryPreference)
-				displayCategory( enabledCategories.get(i), ll);
+			displayCategory( enabledCategories.get(i), ll);
 		}
 
 	    getActivity().setContentView(v);
+	    */
 	 }
 	
 	public void displayCategory(String category, LinearLayout rl)
@@ -261,6 +286,7 @@ public class RateMyDay2Fragment extends Fragment {
 	    return new View.OnClickListener() {
 	        public void onClick(View v) 
 	        {
+	        	Log.d("mmp","s");
 	        	AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 	        	LayoutInflater inflater = LayoutInflater.from(context);
 	 			final View layout = inflater.inflate(R.layout.happiness_rating_dialog,null);
@@ -274,6 +300,19 @@ public class RateMyDay2Fragment extends Fragment {
 	 				public void onClick(DialogInterface dialog, int which) {
 	 					happinessRating = (int) r.getRating();
 	 					activityRating.put("HAPPINESS", happinessRating);
+	 					
+	 					
+	 					SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+						Editor editor = sharedPreferences .edit();
+						editor.putBoolean("ENTRYDONE", true);	
+						editor.commit();
+						editor.putBoolean("FIRSTLOGIN", false);	
+						editor.commit();
+						Date today = new Date();
+						editor.putInt("PREVIOUSENTRYDATE", today.getDate());
+						editor.commit();
+					 	
+					
 	 					endOfRMD1(context);
 	 				}
 	 			});
@@ -309,6 +348,12 @@ public class RateMyDay2Fragment extends Fragment {
             db.addContact(ad);
 		} 
 		
+		Fragment fragment = new HomeFragment();
+	 	FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.frame_container, fragment).commit();
+		
+		
 	}
 	
 
@@ -319,10 +364,13 @@ public class RateMyDay2Fragment extends Fragment {
 		Editor editor = sharedPreferences.edit();
 		mydayCategoriesString = sharedPreferences.getString("mydayCategories"," hardwork , socializing , sleep , sports , hobbies , reading , studying , productivity , eating");
 		newCategoryToAdd = newCategoryToAdd.toLowerCase();
+		final String newCat = newCategoryToAdd; 
+		
 		if(!mydayCategoriesString.contains(newCategoryToAdd))
 		{
 			editor.putString("mydayCategories", mydayCategoriesString+" , "+newCategoryToAdd);
 			editor.putBoolean(newCategoryToAdd, true);
+			editor.commit();
 		}
 		else if(mydayCategoriesString.contains(newCategoryToAdd) )
 		{
@@ -331,8 +379,15 @@ public class RateMyDay2Fragment extends Fragment {
 			savePreferencesBoolResetToTrue(newCategoryToAdd);
 			}
 		}
-		loadSavedPreferences();
 		editor.commit();
+	 	Fragment fragment = new RateMyDay2Fragment();
+	 	FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.frame_container, fragment).commit(); 
+
+		Toast.makeText(getActivity(), newCat+" successfully added to the end of the list. List refreshed.", Toast.LENGTH_LONG).show();
+		//loadSavedPreferences();
+
 	}
 	
 	
@@ -342,7 +397,14 @@ public class RateMyDay2Fragment extends Fragment {
 		Editor editor = sharedPreferences.edit();
 		editor.putBoolean(category.trim(), false);
 		editor.commit();
-		loadSavedPreferences();
+		
+	 	Fragment fragment = new RateMyDay2Fragment();
+	 	FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.frame_container, fragment).commit(); 
+
+		Toast.makeText(getActivity(), category+" successfully removed from the list. List refreshed.", Toast.LENGTH_LONG).show();
+
 	}
 	
 	private void savePreferencesBoolResetToTrue(String category)

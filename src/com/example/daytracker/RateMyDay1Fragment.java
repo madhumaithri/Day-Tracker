@@ -363,11 +363,13 @@ public class RateMyDay1Fragment extends Fragment {
 	 					SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 						Editor editor = sharedPreferences .edit();
 						editor.putBoolean("ENTRYDONE", true);	
-						editor.commit();
+						
 						editor.putBoolean("FIRSTLOGIN", false);	
-						editor.commit();
+						
 						Date today = new Date();
 						editor.putInt("PREVIOUSENTRYDATE", today.getDate());
+						
+						editor.putInt("HAPPINESSTODAY", happinessRating);
 						editor.commit();
 					 	
 					 	

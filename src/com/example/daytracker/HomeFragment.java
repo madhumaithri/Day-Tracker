@@ -105,7 +105,10 @@ public class HomeFragment extends Fragment {
 		        image.setImageResource( resourceId );
 		        
 		        Button add_entry_btn = (Button) getActivity().findViewById(R.id.add_entry_button);
-		        add_entry_btn.setClickable(false);
+		        add_entry_btn.setEnabled(false);
+		        
+		        int ht = sharedPreferences.getInt("HAPPINESSTODAY", 0);
+		        add_entry_btn.setText("Your happiness today : "+ht+"/5");
 		        //add_entry_btn.setBackgroundResource(R.layout.blue_button_background);
 	        }
 		}
