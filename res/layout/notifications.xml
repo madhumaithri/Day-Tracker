@@ -1,6 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" 
+     	xmlns:tools="http://schemas.android.com/tools" 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent" >
+
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
@@ -12,7 +15,7 @@
     android:gravity="center_horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" />
-    />
+    
 
 <TimePicker
     android:id="@+id/timePicker1"
@@ -34,7 +37,8 @@
     android:layout_marginTop="20dp"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" />
-    />
+    
+
 <Spinner
     android:id="@+id/ratingstars_spinner"
     android:gravity="center_horizontal"
@@ -42,10 +46,56 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" />
 
- <Button android:id="@+id/apply_settings_button" 
+
+<TextView 
+    android:id="@+id/UsernameN"
+    android:text="Edit Username"
+    android:gravity="center_horizontal"
+    android:textSize="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" />
+    
+
+
+ <EditText
+     android:id="@+id/setup_user_nameN"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:ems="10"
+     android:textColor="#000000"
+     android:hint="@string/enter_name"
+     android:inputType="textCapSentences" >
+
+ </EditText>
+
+ 
+
+<TextView 
+    android:id="@+id/emailN"
+    android:text="Edit Email Id"
+    android:gravity="center_horizontal"
+    android:textSize="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" />
+    
+ 
+ <EditText
+     android:id="@+id/setup_user_emailN"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:gravity="center"
+     android:ems="10"
+     android:textColor="#000000"
+     android:hint="@string/enter_email"
+     android:inputType="textEmailAddress" />
+
+<Button android:id="@+id/apply_settings_button" 
     android:layout_width="fill_parent" 
     android:layout_height="70dp" 
-    android:layout_marginTop="135dp"
+    android:layout_marginTop="30dp"
     android:text="Apply Settings"
     android:textColor="#ffffff" 
     android:background="@layout/blue_button_background"
@@ -54,3 +104,4 @@
 
 
 </LinearLayout>
+</ScrollView>

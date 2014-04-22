@@ -6,8 +6,11 @@ import java.util.Random;
 //import com
 
 
+
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -81,6 +84,8 @@ text.setText("Rate my "+CriteriaNames.get(position)+" today");
 
 rating = (RatingBar) layout.findViewById(R.id.ratingCategory);
 rating.setId(position);
+SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(container.getContext());
+rating.setNumStars(sharedPreferences.getInt("NUMOFSTARS", 5));
 rating.setOnRatingBarChangeListener(new OnRatingBarChangeListener() 
 {
 	

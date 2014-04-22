@@ -159,7 +159,7 @@ public class MainActivity extends Activity {
    				long id) {
    			// display view for selected nav drawer item
    			/*
-   			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferencess();
+   			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences();
    			boolean ht = sharedPreferences.getBoolean("ENTRYDONE", false);
    			if(ht==true && (position==2 || position==3))
    			displayView(6);

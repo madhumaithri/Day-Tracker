@@ -3,6 +3,8 @@ package com.example.daytracker;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +46,8 @@ public class ListAdapter extends ArrayAdapter<String>{
 	        TextView tv = (TextView) v.findViewById(R.id.textCategory);
 	        RatingBar rb = (RatingBar) v.findViewById(R.id.ratingCategory);
 	        tv.setText("Rate my "+ p +" today");
+	        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+			rb.setNumStars(sharedPreferences.getInt("NUMOFSTARS", 5));
 	   }
 	   
 	   //LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
