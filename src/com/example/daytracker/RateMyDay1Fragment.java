@@ -77,6 +77,8 @@ public class RateMyDay1Fragment extends Fragment {
 		editor.clear();
 		editor.commit();
 		*/
+		
+		//SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		return inflater.inflate(R.layout.rmd1_layout, container, false);
 	}
 

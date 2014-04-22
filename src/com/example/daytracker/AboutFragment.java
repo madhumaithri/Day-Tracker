@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -59,7 +61,19 @@ public class AboutFragment extends Fragment {
         textCategoryans4.setTypeface(font);
         
         
-	    
+        ImageView img = (ImageView) getActivity().findViewById(R.id.imageView1);
+        img.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+            	
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("http://www.youtube.com/watch?v=J5VVOU4CDPk&rel=0"));
+                getActivity().startActivity(intent);
+                //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(" http://www.youtube.com/watch?v=J5VVOU4CDPk&rel=0")));
+                
+            }
+        });
 
 	}
 

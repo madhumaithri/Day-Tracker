@@ -6,10 +6,12 @@ import info.slidingmenu.model.NavDrawerItem;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -20,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity {
@@ -35,7 +38,8 @@ public class MainActivity extends Activity {
     private TypedArray navMenuIcons;
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;// nav drawer title
-    
+    //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+		
     
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -154,6 +158,12 @@ public class MainActivity extends Activity {
    		public void onItemClick(AdapterView<?> parent, View view, int position,
    				long id) {
    			// display view for selected nav drawer item
+   			/*
+   			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferencess();
+   			boolean ht = sharedPreferences.getBoolean("ENTRYDONE", false);
+   			if(ht==true && (position==2 || position==3))
+   			displayView(6);
+   			else */
    			displayView(position);
    		}
    	}
@@ -185,6 +195,8 @@ public class MainActivity extends Activity {
 			fragment = new NotificationsFragment();
 			break;
 		default:
+			fragment = new HomeFragment();
+			Toast.makeText(null, "Rate My Day disabled. Your entry for today is completed already.", Toast.LENGTH_LONG).show();
 			break;
 		}
 
